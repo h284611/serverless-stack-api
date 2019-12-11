@@ -1,5 +1,5 @@
 import * as dynamoDbLib from "./lib/dynamodb-lib";
-import { success, failure } from "./lib/response-lib";
+import { success, notFound } from "./lib/response-lib";
 
 const getNote = async (event, context) => {
     const params = {
@@ -19,7 +19,7 @@ const getNote = async (event, context) => {
             console.log(dbRet);
             return success(dbRet.Item);
         } else {
-            return failure({ status: false, error: 'record not found' })
+            return notFound();
         }
     } catch (error) {
         return failure({ status: false });

@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import * as dynamoDbLib from "./lib/dynamodb-lib";
-import { success, failure } from "./lib/response-lib";
+import { success, internalServerError } from "./lib/response-lib";
 
 const createNote = async (event, context) => {
     const data = JSON.parse(event.body);
@@ -19,7 +19,7 @@ const createNote = async (event, context) => {
         const dbRet = await dynamoDbLib.call('put', params);
         return success(params.Item);
     } catch (error) {
-        return failure({ status: false });
+        return internalServerError();
     }
 };
 
