@@ -2,7 +2,7 @@ import uuid from 'uuid';
 import * as dynamoDbLib from "./lib/dynamodb-lib";
 import { success, failure } from "./lib/response-lib";
 
-export async function main(event, context, callback) {
+const createNote = async (event, context) => {
     const data = JSON.parse(event.body);
     const params = {
         TableName: process.env.tableName,
@@ -17,10 +17,10 @@ export async function main(event, context, callback) {
 
     try {
         const dbRet = await dynamoDbLib.call('put', params);
-        console.log(dbRet);
         return success(params.Item);
     } catch (error) {
         return failure({ status: false });
     }
-}
+};
 
+export { createNote };
